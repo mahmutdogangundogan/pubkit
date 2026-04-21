@@ -1,6 +1,6 @@
 from __future__ import annotations
 from pydantic import BaseModel, Field
-from typing import Annotated, Union, Literal
+from typing import Annotated, Literal
 #import pypandoc
 from datetime import date
 from uuid import UUID
@@ -89,7 +89,7 @@ class Link(ContentNode):
     type: Literal["Link"] = Field("Link", repr=False)
     content: list[
         Annotated[
-            Union[TextRun, Math, Image],
+            TextRun | Math | Image,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -105,13 +105,13 @@ class Footnote(ContentNode):
     type: Literal["Footnote"] = Field("Footnote", repr=False)
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            Union[TextRun, Image, Math, Link],
+            TextRun | Image | Math | Link,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -120,13 +120,13 @@ class Formula(ContentNode): # bloktur
     type: Literal["Formula"] = Field("Formula", repr=False)
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            Union[TextRun, Image, Math, Link],
+            TextRun | Image | Math | Link,
             Field(discriminator="type"),
         ]
     ] =  Field(default_factory=list)
@@ -135,13 +135,13 @@ class DocListItem(ContentNode):
     type: Literal["DocListItem"] = Field("DocListItem", repr=False)
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            Union[TextRun, Image, Link, DocList, Math],
+            TextRun | Image | Link | DocList | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -150,13 +150,13 @@ class DocList(ContentNode):
     type: Literal["DocList"] = Field("DocList", repr=False)
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     title: list[
         Annotated[
-            Union[TextRun, Image, Math, Link],
+            TextRun | Image | Math | Link,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -167,7 +167,7 @@ class Paragraph(ContentNode):
     id: UUID | None = Field(default=None)
     content: list[
         Annotated[
-            Union[TextRun, Image, Link, DocList, Formula, Math],
+            TextRun | Image | Link | DocList | Formula | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -178,13 +178,13 @@ class Figure(ContentNode):
     id: str
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     caption: list[
         Annotated[
-            Union[TextRun, Image, Math, Link],
+            TextRun | Image | Math | Link,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -194,7 +194,7 @@ class TableCell(ContentNode):
     type: Literal["TableCell"] = Field("TableCell", repr=False)
     content: list[
         Annotated[
-            Union[TextRun, Image, Figure, Link, Math],
+            TextRun | Image | Figure | Link | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -213,19 +213,19 @@ class Table(ContentNode):
     id: str
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     caption: list[
         Annotated[
-            Union[TextRun, Image, Math, Link],
+            TextRun | Image | Math | Link,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            Union[TableItem, Image],
+            TableItem | Image,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list) # tablo ya da tablonun resmi olabilir
@@ -240,19 +240,19 @@ class Section(ContentNode):
     id: str | None = Field(default=None)
     label: list[
         Annotated[
-            Union[TextRun, Image, Math],
+            TextRun | Image | Math,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     title: list[
         Annotated[
-            Union[TextRun, Image, Math, Link],
+            TextRun | Image | Math | Link,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            Union["Section", Paragraph],
+            Section | Paragraph,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
