@@ -1,6 +1,6 @@
 from __future__ import annotations
-from pydantic import BaseModel, Field, PrivateAttr
-from typing import Annotated, Union, Optional, Literal
+from pydantic import BaseModel, Field
+from typing import Annotated, Union, Literal
 #import pypandoc
 from datetime import date
 from uuid import UUID
@@ -237,7 +237,7 @@ class ChemExp(ContentNode):
 
 class Section(ContentNode):
     type: Literal["Section"] = Field("Section", repr=False)
-    id: Optional[str] = Field(default=None)
+    id: str | None = Field(default=None)
     label: list[
         Annotated[
             Union[TextRun, Image, Math],
@@ -261,15 +261,15 @@ class Publication(ContentNode):
     type: Literal["Publication"] = Field("Publication", repr=False)
     id: UUID
     title: str
-    doi: Optional[str] = Field(default=None)
+    doi: str | None = Field(default=None)
     authors: list[str] = Field(default_factory=list)
     keywords: list[str] = Field(default_factory=list)
-    publication_date: date
+    publication_date: date | None = Field(default=None)
     publication_type: Literal[
         "ARTICLE", "REVIEW", 'CONFERENCE_PAPER', 'BOOK',
         'BOOK_CHAPTER', 'EDITORIAL', 'OTHER'
     ]
-    container_title: str
+    source_title: str | None = Field(default=None)
     sections: list[Section] = Field(default_factory=list)
     figures: dict[str, Figure] = Field(default_factory=dict) # her birinin id'si olmalı
     tables: dict[str, Table] = Field(default_factory=dict) # her birinin id'si olmalı
