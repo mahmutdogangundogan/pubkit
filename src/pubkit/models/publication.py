@@ -259,7 +259,7 @@ class Section(ContentNode):
 
 class Publication(ContentNode):
     type: Literal["Publication"] = Field("Publication", repr=False)
-    id: UUID
+    id: UUID | None = Field(default=None)
     title: str
     doi: str | None = Field(default=None)
     authors: list[str] = Field(default_factory=list)
