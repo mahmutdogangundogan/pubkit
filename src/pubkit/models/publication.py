@@ -3,7 +3,6 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 #import pypandoc
 from datetime import date
-from uuid import UUID
 
 class ContentNode(BaseModel):
     type: str = Field(..., frozen=True)
@@ -164,7 +163,7 @@ class DocList(ContentNode):
 
 class Paragraph(ContentNode):
     type: Literal["Paragraph"] = Field("Paragraph", repr=False)
-    id: UUID | None = Field(default=None)
+    id: str | None = Field(default=None)
     content: list[
         Annotated[
             TextRun | Image | Link | DocList | Formula | Math,
@@ -259,7 +258,7 @@ class Section(ContentNode):
 
 class Publication(ContentNode):
     type: Literal["Publication"] = Field("Publication", repr=False)
-    id: UUID | None = Field(default=None)
+    id: str | None = Field(default=None)
     title: str
     doi: str | None = Field(default=None)
     authors: list[str] = Field(default_factory=list)
@@ -269,6 +268,7 @@ class Publication(ContentNode):
         "ARTICLE", "REVIEW", 'CONFERENCE_PAPER', 'BOOK',
         'BOOK_CHAPTER', 'EDITORIAL', 'OTHER'
     ]
+    publication_rank: Literal["Q1", "Q2", "Q3", "Q4"] | None = Field(default=None)
     source_title: str | None = Field(default=None)
     sections: list[Section] = Field(default_factory=list)
     figures: dict[str, Figure] = Field(default_factory=dict) # her birinin id'si olmalı
