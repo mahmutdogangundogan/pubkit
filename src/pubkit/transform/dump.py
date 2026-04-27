@@ -111,7 +111,18 @@ def dump_section(
     return paragraph_records, section_records
 
 def dump_publication(publication: Publication) -> PublicationRecord:
-    paragraph_records, section_records = dump_section(publication.sections[0])
+    paragraph_records: list[ParagraphRecord] = []
+    section_records: list[SectionRecord] = []
+
+    start_position = 1
+    for section in publication.sections:
+        _para_recs, _sec_recs = dump_section(section, start_position)
+        if _sec_recs:
+            start_position = _sec_recs[-1].end_position + 1
+        
+        paragraph_records.extend(_para_recs)
+        section_records.extend(_sec_recs)
+
 
     figure_records: list[FigureRecord] = []
     for figure in publication.figures.values():
