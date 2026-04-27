@@ -6,7 +6,10 @@ from .record import (
     PublicationRecord,
 )
 
-from .dump import dump_publication
+from .dump import (
+    dump_section,
+    dump_publication,
+)
 
 from .build import (
     build_figure,
@@ -31,5 +34,6 @@ __all__ = [
     "build_section",
     "build_publication",
     # Dump
+    "dump_section",
     "dump_publication"
 ]
