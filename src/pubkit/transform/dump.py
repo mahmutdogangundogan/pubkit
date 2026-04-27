@@ -10,13 +10,17 @@ from .record import (
 )
 
 from dataclasses import dataclass
+from pydantic import BaseModel
 
 @dataclass(slots=True)
 class _Node:
     section: Section
     child_idx: int
     start_pos: int
-    
+
+def _dump_content_list(content: list[BaseModel]) -> list[dict]:
+    return [item.model_dump(mode="json") for item in content]
+
 
 def dump_section(
         root_section: Section,
@@ -61,7 +65,7 @@ def dump_section(
                     ParagraphRecord(
                         id=item.id,
                         position=position,
-                        content=item.content,
+                        content=_dump_content_list(item.content),
                         referenced_figure_ids=figure_ids,
                         referenced_table_ids=table_ids,
                         referenced_other_ids=other_ids,
@@ -94,8 +98,8 @@ def dump_section(
                     parent_section_id=parent_id,
                     start_position=start,
                     end_position=end,
-                    label=node.section.label,
-                    title=node.section.title,
+                    label=_dump_content_list(node.section.label),
+                    title=_dump_content_list(node.section.title),
                 )
             )
 
@@ -107,9 +111,25 @@ def dump_section(
     return paragraph_records, section_records
 
 def dump_publication(publication: Publication) -> PublicationRecord:
-    paragraphs, sections = dump_section(publication.sections[0])
-    figures: list[FigureRecord] = []
-    tables: list[TableRecord] = []
+    paragraph_records, section_records = dump_section(publication.sections[0])
+
+    figure_records: list[FigureRecord] = []
+    for figure in publication.figures.values():
+        figure_records.append(
+            FigureRecord(
+                id=figure.id,
+                content=_dump_content_list([figure])[0]
+            )
+        )
+
+    table_records: list[TableRecord] = []
+    for table in publication.tables.values():
+        table_records.append(
+            TableRecord(
+                id=table.id,
+                content=_dump_content_list([table])[0]
+            )
+        )
 
     return PublicationRecord(
         id = str(publication.id) if publication.id else None,
@@ -121,8 +141,8 @@ def dump_publication(publication: Publication) -> PublicationRecord:
         publication_type = publication.publication_type,
         publication_rank = None,
         source_title = publication.source_title,
-        sections = sections,
-        paragraphs = paragraphs,
-        figures = figures,
-        tables = tables,
+        sections = section_records,
+        paragraphs = paragraph_records,
+        figures = figure_records,
+        tables = table_records,
     )
