@@ -20,12 +20,14 @@ class _Node:
 
 def dump_section(
         root_section: Section,
-        position: int = 1,
+        start_position: int = 1,
         start_depth: int = 0,
         parent_section_id: str | None = None,
 ) -> tuple[list[ParagraphRecord], list[SectionRecord]]:
     paragraph_records: list[ParagraphRecord] = []
     section_records: list[SectionRecord] = []
+
+    position = start_position
 
     # Set the initial Node
     stack: list[_Node] = [_Node(root_section, 0, position)]
