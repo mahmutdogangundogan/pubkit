@@ -16,11 +16,14 @@ class _Node:
     section: Section
     child_idx: int
     start_pos: int
-    parent_id: str
-    depth: int
     
 
-def dump_section(root_section: Section, position: int = 1) -> tuple[list[ParagraphRecord], list[SectionRecord]]:
+def dump_section(
+        root_section: Section,
+        position: int = 1,
+        start_depth: int = 0,
+        parent_section_id: str | None = None,
+) -> tuple[list[ParagraphRecord], list[SectionRecord]]:
     paragraph_records: list[ParagraphRecord] = []
     section_records: list[SectionRecord] = []
 
@@ -58,8 +61,12 @@ def dump_section(root_section: Section, position: int = 1) -> tuple[list[Paragra
             start = node.start_pos
             end = position - 1
 
-            parent_id = stack[-2].section.id if len(stack) > 1 else None
-            depth = len(stack) - 1
+            parent_id = (
+                stack[-2].section.id
+                if len(stack) > 1
+                else parent_section_id
+            )
+            depth = len(stack) - 1 + start_depth
 
             section_records.append(
                 SectionRecord(
@@ -75,8 +82,10 @@ def dump_section(root_section: Section, position: int = 1) -> tuple[list[Paragra
 
             stack.pop()
 
-    section_records.sort(key=lambda x: x.start_position)
     paragraph_records.sort(key=lambda x: x.position)
+    section_records.sort(key=lambda x: x.start_position)
+
+    return paragraph_records, section_records
 
 def dump_publication(publication: Publication) -> PublicationRecord:
     paragraphs, sections = dump_section(publication.sections[0])
