@@ -15,6 +15,15 @@ from pubkit.models import (
     Reference
 )
 
+from dataclasses import dataclass
+import bisect
+
+@dataclass(frozen=True, kw_only=True, slots=True)
+class _Node:
+    start: int
+    end: int
+    item: Section | Paragraph
+
 def build_figure(figure_record: FigureRecord) -> Figure:
     return Figure.model_validate(figure_record.content)
 
@@ -43,7 +52,7 @@ def build_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
         references=references
     )
 
-def build_section(
+def _build_section_depr1(
         target_section_id: str,
         paragraph_records: list[ParagraphRecord],
         section_records: list[SectionRecord],
@@ -101,6 +110,75 @@ def build_section(
         content=content,
     )
 
+def build_section(
+        target_section_id: str,
+        paragraph_records: list[ParagraphRecord],
+        section_records: list[SectionRecord],
+) -> Section:
+    nodes: list[_Node] = []
+    for record in (paragraph_records + section_records):
+        if isinstance(record, ParagraphRecord):
+            nodes.append(
+                _Node(
+                    start=record.position,
+                    end=record.position,
+                    item=build_paragraph(record)
+                )
+            )
+        elif isinstance(record, SectionRecord):
+            nodes.append(
+                _Node(
+                    start=record.start_position,
+                    end=record.end_position,
+                    item=Section(
+                        id=record.id,
+                        label=record.label,
+                        title=record.title,
+                        content=[],
+                    )
+                )
+            )
+        else:
+            raise TypeError("Only ParagraphRecord or SectionRecord allowed")
+    nodes.sort(key=lambda x: x.start)
+
+    root_node: _Node | None = None
+    for node in nodes:
+        if not isinstance(node.item, Section):
+            continue
+        if node.item.id == target_section_id:
+            root_node = node
+            break
+
+    if root_node is None:
+        raise ValueError(f"Target Section id:({target_section_id}) not found in Sections")
+
+    start = root_node.start
+    end = root_node.end
+
+    start_idx = bisect.bisect_left(nodes, start, key=lambda x: x.start)
+    end_idx = bisect.bisect_right(nodes, end, key=lambda x: x.start)
+    included_nodes = nodes[start_idx:end_idx]
+
+    if root_node != included_nodes[0]:
+        raise ValueError("Root node is not the first included node!")
+    
+
+    stack: list[_Node] = [root_node]
+    for node in included_nodes[1:]:
+        while not (stack[-1].start < node.start <= stack[-1].end):
+            stack.pop()
+
+        parent = stack[-1]
+        if not isinstance(parent.item, Section):
+            raise TypeError("Stack can only contains Section objects")
+        
+        parent.item.content.append(node.item)
+
+        if isinstance(node.item, Section):
+            stack.append(node)
+
+    return root_node.item
 
 
 def build_publication(
