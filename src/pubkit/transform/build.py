@@ -35,15 +35,15 @@ def build_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
 
     for _id in paragraph_record.referenced_figure_ids:
         references.append(
-            Reference(refid=_id, ref_type="figure") # !!! Check this ref_type !!!
+            Reference(refid=_id, ref_type="Figure") # !!! Check this ref_type !!!
         )
     for _id in paragraph_record.referenced_table_ids:
         references.append(
-            Reference(refid=_id, ref_type="table") # !!! Check this ref_type !!!
+            Reference(refid=_id, ref_type="Table") # !!! Check this ref_type !!!
         )
     for _id in paragraph_record.referenced_other_ids:
         references.append(
-            Reference(refid=_id, ref_type="other") # !!! Check this ref_type !!!
+            Reference(refid=_id, ref_type="Other") # !!! Check this ref_type !!!
         )
 
     return Paragraph(
