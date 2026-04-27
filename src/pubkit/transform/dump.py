@@ -43,11 +43,28 @@ def dump_section(
             stack[-1].child_idx += 1
 
             if isinstance(item, Paragraph):
+                figure_ids: list[str] = []
+                table_ids: list[str] = []
+                other_ids: list[str] = []
+
+                for ref in item.references:
+                    if ref.ref_type == "Figure":
+                        figure_ids.append(ref.refid)
+                    elif ref.ref_type == "Table":
+                        table_ids.append(ref.refid)
+                    elif ref.ref_type == "Other":
+                        other_ids.append(ref.refid)
+                    else:
+                        raise ValueError("Reference Ref Type must be only Figure, Table or Other")
+                    
                 paragraph_records.append(
                     ParagraphRecord(
                         id=item.id,
                         position=position,
                         content=item.content,
+                        referenced_figure_ids=figure_ids,
+                        referenced_table_ids=table_ids,
+                        referenced_other_ids=other_ids,
                     )
                 )
                 position += 1
