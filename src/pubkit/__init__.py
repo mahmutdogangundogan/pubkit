@@ -1,4 +1,4 @@
-from src.pubkit.models.publication import (
+from pubkit.models import (
     # Base
     ContentNode,
     # Content nodes
@@ -11,7 +11,7 @@ from src.pubkit.models.publication import (
     Formula,
     DocListItem,
     DocList,
-    # Document structure
+    # Publication structure
     Paragraph,
     Figure,
     TableCell,
@@ -21,6 +21,32 @@ from src.pubkit.models.publication import (
     ChemExp,
     Section,
     Publication,
+)
+
+# Builder Functions
+from pubkit.transform import (
+    SectionRecord,
+    ParagraphRecord,
+    FigureRecord,
+    TableRecord,
+    PublicationRecord,
+    build_paragraph,
+    build_figure,
+    build_table,
+    build_section,
+    build_publication,
+    dump_section,
+    dump_publication
+)
+
+# Renderers
+from pubkit.renderers import (
+    # HTML
+    HTMLRenderer,
+    # Markdown
+    MarkdownRenderer,
+    # Plaintext
+    PlaintextRenderer,
 )
 
 
@@ -45,36 +71,23 @@ __all__ = [
     "ChemExp",
     "Section",
     "Publication",
-    # # Builder Functions
-    # "build_document",
-    # "build_section",
-    # "build_sections",
-    # "build_paragraph",
-    # "build_paragraphs",
-    # "build_figure",
-    # "build_figures",
-    # "build_figures_dict",
-    # "build_table",
-    # "build_tables",
-    # "build_tables_dict",
-    # "reconstruct_content_list",
-    # # HTML Renderer
-    # "HTMLRenderer",
-    # "paragraph_to_html",
-    # "section_to_html",
-    # "table_to_html",
-    # "figure_to_html",
-    # # Markdown Renderer
-    # "MarkdownRenderer",
-    # "paragraph_to_md",
-    # "section_to_md",
-    # "table_to_md",
-    # "figure_to_md",
-    # # Plaintext Renderer
-    # "PlaintextRenderer",
-    # "paragraph_to_text",
-    # "section_to_text",
-    # "section_heading_to_text",
-    # "table_to_text",
-    # "figure_to_text",
+    # Builder
+    "SectionRecord",
+    "ParagraphRecord",
+    "FigureRecord",
+    "TableRecord",
+    "PublicationRecord",
+    "build_paragraph",
+    "build_figure",
+    "build_table",
+    "build_section",
+    "build_publication",
+    "dump_section",
+    "dump_publication",
+    # HTML Renderer
+    "HTMLRenderer",
+    # Markdown Renderer
+    "MarkdownRenderer",
+    # Plaintext Renderer
+    "PlaintextRenderer",
 ]
