@@ -1,0 +1,2 @@
+class PlaintextRenderer:
+    pass

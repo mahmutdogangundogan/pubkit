@@ -1,0 +1,2 @@
+class HTMLRenderer:
+    pass
