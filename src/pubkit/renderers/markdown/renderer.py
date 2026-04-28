@@ -95,7 +95,9 @@ class MarkdownRenderer:
         parts = []
         rendered_refs: set[str] = set()
         
+        section_heading_level = 1
         if include_metadata:
+            section_heading_level = 2
             # Title (H1)
             parts.append(f"# {publication.title}")
             
@@ -114,7 +116,7 @@ class MarkdownRenderer:
         
         # Sections
         for section in publication.sections:
-            parts.append(self.render_section(section, heading_level=2, rendered_refs=rendered_refs))
+            parts.append(self.render_section(section, heading_level=section_heading_level, rendered_refs=rendered_refs))
         
         return "\n\n".join(parts)
 
