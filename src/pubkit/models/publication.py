@@ -10,7 +10,12 @@ class ContentNode(BaseModel):
 class TextRun(ContentNode):
     type: Literal["TextRun"] = Field("TextRun", repr=False)
     content: str
-    styles: set[str] = Field(default_factory=set)
+    styles: set[
+        Literal[
+            "bold", "italic", "sans-serif", "monospace",
+            "small-caps", "underline", "cross-out", "superscript", "subscript"
+        ]
+    ] = Field(default_factory=set)
 
 class Math(ContentNode):
     type: Literal["Math"] = Field("Math", repr=False)
