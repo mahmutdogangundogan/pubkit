@@ -145,7 +145,7 @@ class DocListItem(ContentNode):
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            TextRun | Image | Link | DocList | Math,
+            TextRun | Math | Image | Link | DocList,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
@@ -171,7 +171,7 @@ class Paragraph(ContentNode):
     id: str | None = Field(default=None)
     content: list[
         Annotated[
-            TextRun | Image | Link | DocList | Formula | Math,
+            TextRun | Math | Image | Link | Formula | DocList,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
