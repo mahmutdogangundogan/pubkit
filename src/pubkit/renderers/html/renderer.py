@@ -95,6 +95,20 @@ class HTMLRenderer:
 
         return f'<section{id_attr}>\n{inner_html}\n</section>'
 
+    def render_section_heading(
+            self,
+            section: Section,
+            include_label: bool = True
+    ):
+        text = ""
+        if include_label and section.label:
+            text += node_content_to_html(section.label) + " "
+            
+        if section.title:
+            text += node_content_to_html(section.title)
+
+        return text
+
     def render_publication(
             self,
             publication: Publication,

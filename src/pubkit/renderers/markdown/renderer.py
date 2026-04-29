@@ -86,6 +86,20 @@ class MarkdownRenderer:
                 parts.append(self.render_section(item, heading_level + 1, rendered_refs))
         
         return "\n\n".join(parts)
+    
+    def render_section_heading(
+            self,
+            section: Section,
+            include_label: bool = True
+    ):
+        text = ""
+        if include_label and section.label:
+            text += node_content_to_md(section.label) + " "
+            
+        if section.title:
+            text += node_content_to_md(section.title)
+        
+        return text
 
     def render_publication(
             self,

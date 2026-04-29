@@ -86,6 +86,21 @@ class PlaintextRenderer:
         
         text = " ".join(parts)
         return normalize_whitespace(text)
+    
+    def render_section_heading(
+            self,
+            section: Section,
+            include_label: bool = True
+    ):
+        text = ""
+        if include_label and section.label:
+            text += node_content_to_text(section.label) + " "
+            
+        if section.title:
+            text += node_content_to_text(section.title)
+        
+        text = normalize_whitespace(text)
+        return text
 
     def render_publication(
             self,
