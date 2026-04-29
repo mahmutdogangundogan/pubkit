@@ -22,10 +22,10 @@ class MarkdownRenderer:
             refid: str
     ):
         if refid in self.figures:
-            return node_content_to_md(self.figures[refid])
+            return node_content_to_md([self.figures[refid]])
         
         if refid in self.tables:
-            return node_content_to_md(self.tables[refid])
+            return node_content_to_md([self.tables[refid]])
         
         return ""
 

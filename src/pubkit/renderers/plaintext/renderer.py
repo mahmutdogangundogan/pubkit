@@ -22,10 +22,10 @@ class PlaintextRenderer:
             refid: str
     ):
         if refid in self.figures:
-            return node_content_to_text(self.figures[refid])
+            return node_content_to_text([self.figures[refid]])
         
         if refid in self.tables:
-            return node_content_to_text(self.tables[refid])
+            return node_content_to_text([self.tables[refid]])
         
         return ""
 
