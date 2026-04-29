@@ -128,7 +128,7 @@ def table_item_to_md(item: TableItem) -> str:
     
     return "\n".join(rows)
 
-def table_to_md(table: "Table") -> str:
+def table_to_md(table: Table) -> str:
     parts = []
     
     caption_parts = []

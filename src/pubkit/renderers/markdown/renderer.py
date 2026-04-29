@@ -106,7 +106,7 @@ class MarkdownRenderer:
             if publication.source_title:
                 pub_info_parts.append(publication.source_title)
             if publication.publication_date:
-                pub_info_parts.append(str(publication.publication_date))
+                pub_info_parts.append(publication.publication_date.strftime("%Y-%m-%d"))
             
             if pub_info_parts:
                 parts.append(f"*{' · '.join(pub_info_parts)}*")
@@ -116,7 +116,7 @@ class MarkdownRenderer:
         
         # Sections
         for section in publication.sections:
-            parts.append(self.render_section(section, heading_level=section_heading_level, rendered_refs=rendered_refs))
+            parts.append(self.render_section(section, section_heading_level, rendered_refs))
         
         return "\n\n".join(parts)
 
