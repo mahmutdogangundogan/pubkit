@@ -182,13 +182,16 @@ def build_section(
 
 
 def build_publication(
-        figure_records: list[FigureRecord],
-        table_records: list[TableRecord],
-        paragraph_records: list[ParagraphRecord],
-        section_records: list[SectionRecord],
         publication_record: PublicationRecord
 ) -> Publication:
     sections: list[Section] = []
+
+    figure_records = publication_record.figures
+    table_records = publication_record.tables
+    paragraph_records = publication_record.paragraphs
+    section_records = publication_record.sections
+
+    publication_record.paragraphs
 
     if not section_records:
         raise ValueError("Section records cannot be empty")
