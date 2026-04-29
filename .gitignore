@@ -23,3 +23,6 @@ venv/
 .venv/
 
 data
+
+dist
+how_to.md
