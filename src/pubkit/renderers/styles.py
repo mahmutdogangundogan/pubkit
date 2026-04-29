@@ -61,21 +61,21 @@ class MarkdownStyleMap(BaseStyleMap):
         "sans-serif"
     }
 
-# class HTMLStyleMap(BaseStyleMap):
-#     bold = Tag("<strong>", "</strong>")
-#     italic = Tag("<em>", "</em>")
-#     monospace = Tag("<code>", "</code>")
-#     cross_out = Tag("<del>", "</del>")
-#     underline = Tag("<u>", "</u>")
-#     small_caps = Tag('<span style="font-variant: small-caps;">', "</span>")
-#     sans_serif = Tag('<span style="font-family: sans-serif;">', "</span>")
-#     superscript = Tag("<sup>", "</sup>")
-#     subscript = Tag("<sub>", "</sub>")
+class HTMLStyleMap(BaseStyleMap):
+    bold = Tag("<strong>", "</strong>", 10)
+    cross_out = Tag("<del>", "</del>", 20)
+    italic = Tag("<em>", "</em>", 30)
+    underline = Tag("<u>", "</u>", 40)
+    superscript = Tag("<sup>", "</sup>", 50)
+    subscript = Tag("<sub>", "</sub>", 60)
+    monospace = Tag("<code>", "</code>", 70)
+    small_caps = Tag('<span style="font-variant: small-caps;">', "</span>", 80)
+    sans_serif = Tag('<span style="font-family: sans-serif;">', "</span>", 90)
 
-#     _aliases = {
-#         "cross-out": "cross_out",
-#         "small-caps": "small_caps",
-#         "sans-serif": "sans_serif"
-#     }
+    _aliases = {
+        "cross-out": "cross_out",
+        "small-caps": "small_caps",
+        "sans-serif": "sans_serif"
+    }
 
     
