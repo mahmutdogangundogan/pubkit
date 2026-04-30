@@ -103,7 +103,7 @@ class Link(ContentNode):
 class Reference(ContentNode):
     type: Literal["Reference"] = Field("Reference", repr=False)
     refid: str
-    ref_type: Literal["Figure", "Table", "Other"] = "Other"
+    ref_type: Literal["Figure", "Table", "Other"] | str = "Other"
 
 class Footnote(ContentNode):
     type: Literal["Footnote"] = Field("Footnote", repr=False)
