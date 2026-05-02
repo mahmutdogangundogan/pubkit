@@ -49,17 +49,20 @@ def dump_section(
             if isinstance(item, Paragraph):
                 figure_ids: list[str] = []
                 table_ids: list[str] = []
-                other_ids: list[str] = []
+                other_ids: list[dict[str, str]] = []
 
                 for ref in item.references:
                     if ref.ref_type == "Figure":
                         figure_ids.append(ref.refid)
                     elif ref.ref_type == "Table":
                         table_ids.append(ref.refid)
-                    elif ref.ref_type == "Other":
-                        other_ids.append(ref.refid)
                     else:
-                        raise ValueError("Reference Ref Type must be only Figure, Table or Other")
+                        other_ids.append(
+                            {
+                                "type": ref.ref_type,
+                                "id": ref.refid,
+                            }
+                        )
                     
                 paragraph_records.append(
                     ParagraphRecord(

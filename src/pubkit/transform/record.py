@@ -20,7 +20,7 @@ class ParagraphRecord:
     content: list[dict[str, Any]]
     referenced_figure_ids: list[str] = field(default_factory=list)
     referenced_table_ids: list[str] = field(default_factory=list)
-    referenced_other_ids: list[str] = field(default_factory=list)
+    referenced_other_ids: list[dict[str, str]] = field(default_factory=list)
 
 
 @dataclass(frozen=True, kw_only=True, slots=True)

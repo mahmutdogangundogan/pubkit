@@ -41,9 +41,9 @@ def build_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
         references.append(
             Reference(refid=_id, ref_type="Table") # !!! Check this ref_type !!!
         )
-    for _id in paragraph_record.referenced_other_ids:
+    for ref_record in paragraph_record.referenced_other_ids:
         references.append(
-            Reference(refid=_id, ref_type="Other") # !!! Check this ref_type !!!
+            Reference(refid=ref_record["id"], ref_type=ref_record["type"]) # !!! Check this ref_type !!!
         )
 
     return Paragraph(
