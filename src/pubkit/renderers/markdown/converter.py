@@ -44,7 +44,7 @@ def node_content_to_md(content: list[TextRun | Math | Image | Link | Formula | F
 
 def math_to_md(math: Math) -> str:
     # Markdown not supported YET!
-    return math._json_to_plaintext()
+    return math.to_plaintext()
 
 def image_to_md(image: Image) -> str:
     alt_text = text_run_to_md(image.content)
