@@ -1,4 +1,4 @@
-from pubkit.models import (
+from .models import (
     # Base
     ContentNode,
     # Content nodes
@@ -24,23 +24,23 @@ from pubkit.models import (
 )
 
 # Builder Functions
-from pubkit.transform import (
+from .transform import (
     SectionRecord,
     ParagraphRecord,
     FigureRecord,
     TableRecord,
     PublicationRecord,
-    build_paragraph,
-    build_figure,
-    build_table,
-    build_section,
-    build_publication,
+    rebuild_paragraph,
+    rebuild_figure,
+    rebuild_table,
+    rebuild_section,
+    rebuild_publication,
     dump_section,
     dump_publication
 )
 
 # Renderers
-from pubkit.renderers import (
+from .renderers import (
     # HTML
     HTMLRenderer,
     # Markdown
@@ -77,11 +77,11 @@ __all__ = [
     "FigureRecord",
     "TableRecord",
     "PublicationRecord",
-    "build_paragraph",
-    "build_figure",
-    "build_table",
-    "build_section",
-    "build_publication",
+    "rebuild_paragraph",
+    "rebuild_figure",
+    "rebuild_table",
+    "rebuild_section",
+    "rebuild_publication",
     "dump_section",
     "dump_publication",
     # HTML Renderer

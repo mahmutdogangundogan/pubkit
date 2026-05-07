@@ -11,12 +11,12 @@ from .dump import (
     dump_publication,
 )
 
-from .build import (
-    build_figure,
-    build_table,
-    build_paragraph,
-    build_section,
-    build_publication
+from .rebuild import (
+    rebuild_figure,
+    rebuild_table,
+    rebuild_paragraph,
+    rebuild_section,
+    rebuild_publication
 )
 
 
@@ -28,11 +28,11 @@ __all__ = [
     "TableRecord",
     "PublicationRecord",
     # Builder Functions
-    "build_paragraph",
-    "build_figure",
-    "build_table",
-    "build_section",
-    "build_publication",
+    "rebuild_paragraph",
+    "rebuild_figure",
+    "rebuild_table",
+    "rebuild_section",
+    "rebuild_publication",
     # Dump
     "dump_section",
     "dump_publication"

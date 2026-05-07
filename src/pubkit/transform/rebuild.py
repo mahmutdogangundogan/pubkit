@@ -24,13 +24,13 @@ class _Node:
     end: int
     item: Section | Paragraph
 
-def build_figure(figure_record: FigureRecord) -> Figure:
+def rebuild_figure(figure_record: FigureRecord) -> Figure:
     return Figure.model_validate(figure_record.content)
 
-def build_table(table_record: TableRecord) -> Table:
+def rebuild_table(table_record: TableRecord) -> Table:
     return Table.model_validate(table_record.content)
 
-def build_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
+def rebuild_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
     references: list[Reference] = []
 
     for _id in paragraph_record.referenced_figure_ids:
@@ -52,7 +52,7 @@ def build_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
         references=references
     )
 
-def _build_section_depr1(
+def _rebuild_section_depr1(
         target_section_id: str,
         paragraph_records: list[ParagraphRecord],
         section_records: list[SectionRecord],
@@ -93,11 +93,11 @@ def _build_section_depr1(
             sub_sec_para_recs.append(para_rec)
     
     content: list[Paragraph | Section] = []
-    content.extend([build_paragraph(para_rec) for para_rec in current_para_recs])
+    content.extend([rebuild_paragraph(para_rec) for para_rec in current_para_recs])
 
     content.extend(
         [
-            build_section(sec_rec.id, sub_sec_para_recs, sub_sec_recs) 
+            rebuild_section(sec_rec.id, sub_sec_para_recs, sub_sec_recs) 
             for sec_rec in sub_sec_recs if sec_rec.depth == target_sec_rec.depth + 1
             # only 1 level deep sections
         ]
@@ -110,7 +110,7 @@ def _build_section_depr1(
         content=content,
     )
 
-def build_section(
+def rebuild_section(
         target_section_id: str,
         paragraph_records: list[ParagraphRecord],
         section_records: list[SectionRecord],
@@ -122,7 +122,7 @@ def build_section(
                 _Node(
                     start=record.position,
                     end=record.position,
-                    item=build_paragraph(record)
+                    item=rebuild_paragraph(record)
                 )
             )
         elif isinstance(record, SectionRecord):
@@ -181,7 +181,7 @@ def build_section(
     return root_node.item
 
 
-def build_publication(
+def rebuild_publication(
         publication_record: PublicationRecord
 ) -> Publication:
     sections: list[Section] = []
@@ -210,7 +210,7 @@ def build_publication(
     root_sec_recs.sort(key=lambda x: x.start_position)
 
     for sec_rec in root_sec_recs:
-        section = build_section(
+        section = rebuild_section(
             target_section_id=sec_rec.id,
             paragraph_records=paragraph_records,
             section_records=section_records,
@@ -220,12 +220,12 @@ def build_publication(
     
     figures: dict[str, Figure] = {}
     for fig_rec in figure_records:
-        figure = build_figure(fig_rec)
+        figure = rebuild_figure(fig_rec)
         figures[figure.id] = figure
 
     tables: dict[str, Table] = {}
     for tbl_rec in table_records:
-        table = build_table(tbl_rec)
+        table = rebuild_table(tbl_rec)
         tables[table.id] = table
 
 
