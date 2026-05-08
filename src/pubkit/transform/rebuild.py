@@ -183,13 +183,8 @@ def rebuild_publication(
     paragraph_records = publication_record.paragraphs
     section_records = publication_record.sections
 
-    publication_record.paragraphs
-
-    if not section_records:
-        raise ValueError("Section records cannot be empty")
-
     depths = [sec_rec.depth for sec_rec in section_records]
-    min_depth = min(depths)
+    min_depth = min(depths) if depths else -1
 
     root_sec_recs: list[SectionRecord] = []
     for sec_rec in section_records:
