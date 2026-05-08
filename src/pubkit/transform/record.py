@@ -12,15 +12,18 @@ class SectionRecord:
     label: list[dict[str, Any]] = field(default_factory=list)
     title: list[dict[str, Any]] = field(default_factory=list)
 
+@dataclass(frozen=True, kw_only=True, slots=True)
+class ReferenceRecord:
+    refid: str
+    type: str
+
 
 @dataclass(frozen=True, kw_only=True, slots=True)
 class ParagraphRecord:
     id: str | None = None
     position: int
     content: list[dict[str, Any]]
-    referenced_figure_ids: list[str] = field(default_factory=list)
-    referenced_table_ids: list[str] = field(default_factory=list)
-    referenced_other_ids: list[dict[str, str]] = field(default_factory=list)
+    reference_records: list[ReferenceRecord] = field(default_factory=list)
 
 
 @dataclass(frozen=True, kw_only=True, slots=True)

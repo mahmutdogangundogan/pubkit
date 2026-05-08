@@ -26,6 +26,7 @@ from .models import (
 # Builder Functions
 from .transform import (
     SectionRecord,
+    ReferenceRecord,
     ParagraphRecord,
     FigureRecord,
     TableRecord,
@@ -73,6 +74,7 @@ __all__ = [
     "Publication",
     # Builder
     "SectionRecord",
+    "ReferenceRecord",
     "ParagraphRecord",
     "FigureRecord",
     "TableRecord",

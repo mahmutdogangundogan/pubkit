@@ -4,6 +4,7 @@ from pubkit import Paragraph, Section, Publication
 from .record import (
     PublicationRecord,
     SectionRecord,
+    ReferenceRecord,
     ParagraphRecord,
     TableRecord,
     FigureRecord
@@ -47,31 +48,21 @@ def dump_section(
             stack[-1].child_idx += 1
 
             if isinstance(item, Paragraph):
-                figure_ids: list[str] = []
-                table_ids: list[str] = []
-                other_ids: list[dict[str, str]] = []
+                reference_records: list[ReferenceRecord] = []
 
                 for ref in item.references:
-                    if ref.ref_type == "Figure":
-                        figure_ids.append(ref.refid)
-                    elif ref.ref_type == "Table":
-                        table_ids.append(ref.refid)
-                    else:
-                        other_ids.append(
-                            {
-                                "type": ref.ref_type,
-                                "id": ref.refid,
-                            }
-                        )
+                    ref_rec = ReferenceRecord(
+                        refid=ref.refid,
+                        type=ref.ref_type,
+                    )
+                    reference_records.append(ref_rec)
                     
                 paragraph_records.append(
                     ParagraphRecord(
                         id=item.id,
                         position=position,
                         content=_dump_content_list(item.content),
-                        referenced_figure_ids=figure_ids,
-                        referenced_table_ids=table_ids,
-                        referenced_other_ids=other_ids,
+                        reference_records=reference_records
                     )
                 )
                 position += 1

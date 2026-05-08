@@ -1,5 +1,6 @@
 from .record import (
     SectionRecord,
+    ReferenceRecord,
     ParagraphRecord,
     FigureRecord,
     TableRecord,
@@ -23,6 +24,7 @@ from .rebuild import (
 __all__ = [
     # Records
     "SectionRecord",
+    "ReferenceRecord",
     "ParagraphRecord",
     "FigureRecord",
     "TableRecord",

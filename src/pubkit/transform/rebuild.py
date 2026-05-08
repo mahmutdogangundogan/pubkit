@@ -33,17 +33,9 @@ def rebuild_table(table_record: TableRecord) -> Table:
 def rebuild_paragraph(paragraph_record: ParagraphRecord) -> Paragraph:
     references: list[Reference] = []
 
-    for _id in paragraph_record.referenced_figure_ids:
+    for reference_record in paragraph_record.reference_records:
         references.append(
-            Reference(refid=_id, ref_type="Figure") # !!! Check this ref_type !!!
-        )
-    for _id in paragraph_record.referenced_table_ids:
-        references.append(
-            Reference(refid=_id, ref_type="Table") # !!! Check this ref_type !!!
-        )
-    for ref_record in paragraph_record.referenced_other_ids:
-        references.append(
-            Reference(refid=ref_record["id"], ref_type=ref_record["type"]) # !!! Check this ref_type !!!
+            Reference(refid=reference_record.refid, ref_type=reference_record.type) # !!! Check this ref_type !!!
         )
 
     return Paragraph(
