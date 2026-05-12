@@ -145,7 +145,7 @@ class DocListItem(ContentNode):
     ] = Field(default_factory=list)
     content: list[
         Annotated[
-            TextRun | Math | Image | Link | DocList, # may be Formula missing, check that 2985/147422
+            TextRun | Math | Image | Link | DocList | Formula,
             Field(discriminator="type"),
         ]
     ] = Field(default_factory=list)
