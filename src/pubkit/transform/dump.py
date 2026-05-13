@@ -28,9 +28,16 @@ def dump_section(
         start_position: int = 1,
         start_depth: int = 0,
         parent_section_id: str | None = None,
+        figure_ids: list[str] | None = None,
+        table_ids: list[str] | None = None
 ) -> tuple[list[ParagraphRecord], list[SectionRecord]]:
     paragraph_records: list[ParagraphRecord] = []
     section_records: list[SectionRecord] = []
+
+    if figure_ids is None:
+        figure_ids = []
+    if table_ids is None:
+        table_ids = []
 
     position = start_position
 
@@ -49,12 +56,24 @@ def dump_section(
 
             if isinstance(item, Paragraph):
                 reference_records: list[ReferenceRecord] = []
-
+                processed_refids: list[str] = []
                 for ref in item.references:
+                    refid = ref.refid
+                    ref_type = ref.ref_type
+
+                    if refid in processed_refids:
+                        continue
+
+                    if refid in figure_ids:
+                        ref_type = "Figure" 
+                    if refid in table_ids:
+                        ref_type = "Table" 
+
                     ref_rec = ReferenceRecord(
-                        refid=ref.refid,
-                        type=ref.ref_type,
+                        refid=refid,
+                        type=ref_type,
                     )
+                    processed_refids.append(refid)
                     reference_records.append(ref_rec)
                     
                 paragraph_records.append(
@@ -104,13 +123,22 @@ def dump_section(
 
     return paragraph_records, section_records
 
-def dump_publication(publication: Publication) -> PublicationRecord:
+def dump_publication(publication: Publication, normalize_references: bool = False) -> PublicationRecord:
+    """
+    Normalize References option is used for transforming cross-ref / float-anchor references 
+    into Table or Figure references
+    """
     paragraph_records: list[ParagraphRecord] = []
     section_records: list[SectionRecord] = []
 
     start_position = 1
     for section in publication.sections:
-        _para_recs, _sec_recs = dump_section(section, start_position)
+        _para_recs, _sec_recs = dump_section(
+            section,
+            start_position,
+            figure_ids=list(publication.figures.keys()) if normalize_references else None,
+            table_ids=list(publication.tables.keys()) if normalize_references else None
+        )
         if _sec_recs:
             start_position = _sec_recs[-1].end_position + 1
         
