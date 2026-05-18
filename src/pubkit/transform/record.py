@@ -48,6 +48,7 @@ class PublicationRecord:
     publication_date: date | None = field(default=None)
     publication_type: str
     publication_rank: str | None = field(default=None)
+    subject_areas: list
     source_title: str | None = field(default=None)
     sections: list[SectionRecord] = field(default_factory=list)
     paragraphs: list[ParagraphRecord] = field(default_factory=list)

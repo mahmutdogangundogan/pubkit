@@ -274,6 +274,7 @@ class Publication(ContentNode):
         'BOOK_CHAPTER', 'EDITORIAL', 'OTHER'
     ]
     publication_rank: Literal["Q1", "Q2", "Q3", "Q4"] | None = Field(default=None)
+    subject_areas: list[str] = Field(default_factory=list)
     source_title: str | None = Field(default=None)
     sections: list[Section] = Field(default_factory=list)
     figures: dict[str, Figure] = Field(default_factory=dict) # her birinin id'si olmalı

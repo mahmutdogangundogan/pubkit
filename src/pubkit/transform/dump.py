@@ -173,6 +173,7 @@ def dump_publication(publication: Publication, normalize_references: bool = Fals
         publication_date = publication.publication_date,
         publication_type = publication.publication_type,
         publication_rank = None,
+        subject_areas = publication.subject_areas,
         source_title = publication.source_title,
         sections = section_records,
         paragraphs = paragraph_records,

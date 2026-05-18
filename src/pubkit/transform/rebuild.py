@@ -225,6 +225,7 @@ def rebuild_publication(
         publication_date = publication_record.publication_date,
         publication_type = publication_record.publication_type,
         publication_rank = publication_record.publication_rank,
+        subject_areas = publication_record.subject_areas, 
         source_title = publication_record.source_title,
         sections=sections,
         figures=figures,
