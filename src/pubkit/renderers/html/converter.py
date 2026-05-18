@@ -35,7 +35,7 @@ def node_content_to_html(content: list[TextRun | Math | Image | Link | Formula |
                 output.append(figure_to_html(node))
             elif node.type == "Table":
                 output.append(table_to_html(node))
-            elif node.type == "DocList":
+            elif node.type in ["DocList", "List"]:
                 output.append(doclist_to_html(node))
             else:
                 raise ValueError(f"Unknown node type: {node.type}")

@@ -39,7 +39,7 @@ def node_content_to_text(content: list[TextRun | Math | Image | Link | Formula |
                 output.append(figure_to_text(node))
             elif node.type == "Table":
                 output.append(table_to_text(node))
-            elif node.type == "DocList":
+            elif node.type in ["DocList", "List"]:
                 output.append(doclist_to_text(node))
             else:
                 raise ValueError(f"Unknown node type: {node.type}")
