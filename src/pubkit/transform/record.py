@@ -53,3 +53,4 @@ class PublicationRecord:
     paragraphs: list[ParagraphRecord] = field(default_factory=list)
     figures: list[FigureRecord] = field(default_factory=list)
     tables: list[TableRecord] = field(default_factory=list)
+    extra: dict = field(default_factory=dict)

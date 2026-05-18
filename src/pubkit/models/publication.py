@@ -278,3 +278,4 @@ class Publication(ContentNode):
     sections: list[Section] = Field(default_factory=list)
     figures: dict[str, Figure] = Field(default_factory=dict) # her birinin id'si olmalı
     tables: dict[str, Table] = Field(default_factory=dict) # her birinin id'si olmalı
+    extra: dict = Field(default_factory=dict)

@@ -178,4 +178,5 @@ def dump_publication(publication: Publication, normalize_references: bool = Fals
         paragraphs = paragraph_records,
         figures = figure_records,
         tables = table_records,
+        extra = publication.extra
     )

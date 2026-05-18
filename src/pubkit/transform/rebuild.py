@@ -228,5 +228,6 @@ def rebuild_publication(
         source_title = publication_record.source_title,
         sections=sections,
         figures=figures,
-        tables=tables
+        tables=tables,
+        extra=publication_record.extra
     )
