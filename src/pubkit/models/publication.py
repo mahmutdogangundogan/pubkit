@@ -136,7 +136,7 @@ class Formula(ContentNode): # bloktur
     ] =  Field(default_factory=list)
 
 class DocListItem(ContentNode):
-    type: Literal["DocListItem"] = Field("DocListItem", repr=False)
+    type: Literal["ListItem", "DocListItem"] = Field("ListItem", repr=False)
     label: list[
         Annotated[
             TextRun | Image | Math,
@@ -151,7 +151,7 @@ class DocListItem(ContentNode):
     ] = Field(default_factory=list)
 
 class DocList(ContentNode):
-    type: Literal["DocList"] = Field("DocList", repr=False)
+    type: Literal["List", "DocList"] = Field("List", repr=False)
     label: list[
         Annotated[
             TextRun | Image | Math,
