@@ -21,6 +21,8 @@ from .publication import (
     ChemExp,
     Section,
     Publication,
+    # Adapters
+    node_list_adapter
 )
 
 __all__ = [
@@ -43,5 +45,6 @@ __all__ = [
     "Table",
     "ChemExp",
     "Section",
-    "Publication"
+    "Publication",
+    "node_list_adapter"
 ]

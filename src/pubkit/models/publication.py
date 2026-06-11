@@ -1,5 +1,5 @@
 from __future__ import annotations
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, TypeAdapter
 from typing import Annotated, Literal
 #import pypandoc
 from datetime import date
@@ -280,3 +280,10 @@ class Publication(ContentNode):
     figures: dict[str, Figure] = Field(default_factory=dict) # her birinin id'si olmalı
     tables: dict[str, Table] = Field(default_factory=dict) # her birinin id'si olmalı
     extra: dict = Field(default_factory=dict)
+
+node_list_adapter = TypeAdapter(list[Annotated[
+    TextRun | Math | Image | Link | Reference | Footnote | Formula |
+    DocListItem | DocList | Paragraph | Figure | TableCell |
+    TableRow | TableItem | Table | ChemExp | Section | Publication,
+    Field(discriminator="type"),
+]])
