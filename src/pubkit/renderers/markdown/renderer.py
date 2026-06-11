@@ -13,9 +13,11 @@ class MarkdownRenderer:
             self,
             figures: dict[str, Figure] | None = None,
             tables: dict[str, Table] | None = None,
+            render_ids: bool = False
     ):
         self.figures = figures or {}
         self.tables = tables or {}
+        self.render_ids = render_ids
 
     def render_reference(
             self,
@@ -49,8 +51,16 @@ class MarkdownRenderer:
                 if ref_md:
                     parts.append(ref_md)
                     rendered_refs.add(refid)
+
+        paragraph_content = "\n\n".join(parts)
+
+        if self.render_ids and paragraph.id is not None:
+            id_content = f"(paragraph_id: {paragraph.id})"
+            return f"{id_content}\n{paragraph_content}"
         
-        return "\n\n".join(parts)
+        return paragraph_content
+            
+        
     
     def render_section(
             self,
@@ -71,6 +81,9 @@ class MarkdownRenderer:
         
         if section.title:
             heading_parts.append(node_content_to_md(section.title))
+
+        if self.render_ids and section.id is not None:
+            heading_parts.append(f"(section_id: {section.id})")
         
         if heading_parts:
             level = min(heading_level, MAX_HEADING_LEVEL)
@@ -137,9 +150,11 @@ class MarkdownRenderer:
     @classmethod
     def from_publication(
             cls,
-            publication: Publication
+            publication: Publication,
+            render_ids: bool = False
     ) -> MarkdownRenderer:
         return cls(
             figures=publication.figures,
             tables=publication.tables,
+            render_ids=render_ids,
         )

@@ -44,10 +44,13 @@ from .transform import (
 from .renderers import (
     # HTML
     HTMLRenderer,
+    node_content_to_html,
     # Markdown
     MarkdownRenderer,
+    node_content_to_md,
     # Plaintext
     PlaintextRenderer,
+    node_content_to_text,
 )
 
 
@@ -88,8 +91,11 @@ __all__ = [
     "dump_publication",
     # HTML Renderer
     "HTMLRenderer",
+    "node_content_to_html",
     # Markdown Renderer
     "MarkdownRenderer",
+    "node_content_to_md",
     # Plaintext Renderer
     "PlaintextRenderer",
+    "node_content_to_text",
 ]
