@@ -39,7 +39,7 @@ class MarkdownRenderer:
         if rendered_refs is None:
             rendered_refs = set()
         
-        parts = []
+        parts: list[str] = []
         
         content_md = node_content_to_md(paragraph.content)
         parts.append(content_md)
